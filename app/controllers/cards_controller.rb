@@ -1,0 +1,45 @@
+class CardsController < ApplicationController
+
+  def index
+    render json: Card.all
+  end
+
+  def show
+    @card = Card.find_by(id: params[:id])
+    render json: @card
+  end
+
+  def new
+    @card = Card.new
+  end
+
+  def create
+    @card = Card.create(card_params)
+    if @card.valid?
+      redirect_to(@card)
+    else
+      render :new
+    end
+  end
+
+  def edit
+    render :edit
+  end
+
+  def update
+    if @card.update
+      redirect_to(@card)
+    else
+      render :edit
+      end
+  end
+
+
+
+  private
+
+  def card_params
+    params.require(:card).permit(:title, :description, :comment, :list_id)
+  end
+
+end
