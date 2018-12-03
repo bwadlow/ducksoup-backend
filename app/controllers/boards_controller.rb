@@ -23,6 +23,7 @@ class BoardsController < ApplicationController
   end
 
   def edit
+    @board = Board.find(params[:id])
     render :edit
   end
 
@@ -39,7 +40,7 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:name, :background)
+    params.require(:board).permit(:id, :name, :background)
   end
 
 end

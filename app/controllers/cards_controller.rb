@@ -1,4 +1,5 @@
 class CardsController < ApplicationController
+  before_action :set_card, only: [:edit, :update]
 
   def index
     render json: Card.all
@@ -16,22 +17,17 @@ class CardsController < ApplicationController
   def create
     @card = Card.create(card_params)
     if @card.valid?
-      redirect_to(@card)
+      # redirect_to(@card)
+      render :json => :new, :status => :ok
     else
-      render :new
+      render :json => @card.errors, :status => nope!
     end
   end
 
-  def edit
-    render :edit
-  end
 
   def update
-    if @card.update
-      redirect_to(@card)
-    else
-      render :edit
-      end
+    @card.update(card_params)
+    render :json => :@card
   end
 
 
@@ -39,7 +35,11 @@ class CardsController < ApplicationController
   private
 
   def card_params
-    params.require(:card).permit(:title, :description, :comment, :list_id)
+    params.require(:card).permit(:id, :title, :description, :comment, :list_id, :position)
+  end
+
+  def set_card
+    @card = Card.find(params[:id])
   end
 
 end
