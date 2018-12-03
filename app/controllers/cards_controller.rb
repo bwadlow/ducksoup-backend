@@ -17,10 +17,9 @@ class CardsController < ApplicationController
   def create
     @card = Card.create(card_params)
     if @card.valid?
-      # redirect_to(@card)
-      render :json => :new, :status => :ok
+      redirect_to(@card)
     else
-      render :json => @card.errors, :status => nope!
+      render :new
     end
   end
 
