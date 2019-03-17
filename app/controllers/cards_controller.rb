@@ -26,7 +26,7 @@ class CardsController < ApplicationController
 
   def update
     @card.update(card_params)
-    render :json => :@card
+    render :json => @card
   end
 
 
